@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const client = new Discord.Client();
 const fs = require("fs");
 const cache = JSON.parse(fs.readFileSync("./caches.json", "utf8"))
 const config = JSON.parse(fs.readFileSync("./tokens.json", "utf8"))
@@ -7,8 +6,9 @@ const token = config.tokens;
 const figlet = require('figlet');
 const print = console.green;
 
-
-client.on("ready", () => {
+token.forEach(acc => {
+    const client = new Discord.Client();
+    client.on("ready", () => {
     if(cache.dm == "off") {
     setInterval(() => {
         figlet(cache.msg, function(err, dataed) {
@@ -33,7 +33,5 @@ print("Sended One Message")
                 })
             }, cache.delay)
         }})
-
-token.forEach(acc => {
     client.login(acc)
     });
